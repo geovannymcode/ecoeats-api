@@ -1,0 +1,47 @@
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: ecoeats-db
+    environment:
+      POSTGRES_DB: ecoeats
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: ecoeats-api
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ecoeats
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: postgres
+      JWT_SECRET: ecoeats-jwt-secret-change-this-in-production-min-32-chars
+      JWT_EXPIRATION: 24h
+      ALLOWED_ORIGINS: http://localhost:3000,http://localhost:8080
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./src:/app/src
+      - ./node_modules:/app/node_modules
+    command: npm run start:dev
+
+volumes:
+  pgdata:
