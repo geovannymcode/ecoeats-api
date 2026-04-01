@@ -27,6 +27,9 @@ export class SeedService implements OnModuleInit {
 
     const hashedPassword = await bcrypt.hash('123456', 10);
     await this.userRepository.save({
+      numeroDocumento: '00000000',
+      nombres: 'Admin',
+      apellidos: 'EcoEats',
       email: 'admin@ecoeats.com',
       password: hashedPassword,
       tokenFirebaseAuth: '',
