@@ -11,6 +11,15 @@ export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column({ name: 'numero_documento', unique: true })
+  numeroDocumento: string;
+
+  @Column()
+  nombres: string;
+
+  @Column()
+  apellidos: string;
+
   @Column({ unique: true })
   email: string;
 
