@@ -6,6 +6,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
 import jwtConfig from './config/jwt.config';
+import resendConfig from './config/resend.config';
 import { configValidationSchema } from './config/config.validation';
 
 import { AuthModule } from './modules/auth/auth.module';
@@ -18,7 +19,7 @@ import { SeedModule } from './database/seeds/seed.module';
     // ─── Configuration ──────────────────────────────────────────
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [appConfig, databaseConfig, jwtConfig],
+      load: [appConfig, databaseConfig, jwtConfig, resendConfig],
       validationSchema: configValidationSchema,
       validationOptions: { abortEarly: true },
     }),
