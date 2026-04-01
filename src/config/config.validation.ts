@@ -16,6 +16,11 @@ export const configValidationSchema = Joi.object({
   JWT_SECRET: Joi.string().required(),
   JWT_EXPIRATION: Joi.string().default('24h'),
 
+  // Resend (email)
+  RESEND_API_KEY: Joi.string().required(),
+  RESEND_FROM_EMAIL: Joi.string().default('noreply@budaso.resend.app'),
+  RESEND_FROM_NAME: Joi.string().default('EcoEats'),
+
   // CORS
   ALLOWED_ORIGINS: Joi.string().default('http://localhost:3000'),
 });
